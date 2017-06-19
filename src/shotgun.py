@@ -106,4 +106,4 @@ def shotgun(hileraBase, cantFragmentos, longFragmentos, desvLongitud, cobertura,
     with open('descripcion.json', 'w') as fp:
         json.dump(datos, fp)
         
-shotgun("ACGTGACGATCGATTAGGCTAGCGAGGCTAGAC",6,6,2,True,True,2,True)     
+##shotgun("ACGTGACGATCGATTAGGCTAGCGAGGCTAGAC",6,6,2,True,True,2,True)
