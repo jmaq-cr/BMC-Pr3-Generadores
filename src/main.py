@@ -9,7 +9,8 @@ def main():
     global HileraBase
     global repeat
     global repeatOriginal
-
+    global cantRepeat
+    cantRepeat = 0
 
 
     while salir == False:
@@ -24,7 +25,8 @@ def main():
         print("7. Insertar Repeat en la Hilera Random")
         print("8. Modificar Repeat")
         print("9. Inserta Repeat con Errores")
-        print("10. Shotgun")
+        print("10. Generar Archivos")
+        print("11. Shotgun")
         opc = str(input(">>"))
         if opc == "1":
             hileraBase = cargarHilera()
@@ -72,10 +74,19 @@ def main():
 
             salirAux = False
             lista = []
+            listaR=[]
+
+            cantRepeat = int(input("Ingrese la cantidad de repeat"))
+            i = 0
+            while i < cantRepeat:
+                lista.append(repeat)
+                i = i + 1
             while salirAux == False:
-                print("1. Modificar Repeat Cambio Base")
-                print("2. Modificar Repeat Eliminar")
-                print("3. Modificar Repeat Insertar")
+
+
+                print("1. Modificar Repeat Insert")
+                print("2. Modificar Repeat Cambia Base")
+                print("3. Modificar Repeat Elimina")
                 print("4. Orientacion Inversa")
                 print("5. Salir")
                 print()
@@ -84,25 +95,23 @@ def main():
 
                 if opcAux == "1":
                     print(repeatOriginal)
-                    repeatAux=errorCambioBase(repeat)
-                    lista.append(repeatAux)
-                    print("Resultado: "+repeatAux)
+                    print(lista)
+                    lista=mutaciones(lista,1)
+                    print(lista)
+                    print("Resultado: ", lista)
                 elif opcAux == "2":
-                    print(repeat)
-                    prueba = errorEliminarBase(repeat)
-                    lista.append(prueba)
-                    print("Resultado: " + prueba)
+                    lista = mutaciones(lista, 2)
+                    print("Resultado: " , lista)
                 elif opcAux == "3":
-                    print(repeat)
-                    prueba = errorInsertarBase(repeat)
-                    lista.append(prueba)
-                    print(len(lista))
-                    print("Resultado: " + prueba)
+                    lista = mutaciones(lista, 3)
+                    print("Resultado: ", lista)
                 elif opcAux == "4":
                     if len(lista)>0:
+                        print(lista)
                         posicionRandom = randint(0, len(lista) - 1)
                         valorInvertido=reverse(lista[posicionRandom])
                         lista[posicionRandom]=valorInvertido
+                        print(lista)
                         print(valorInvertido)
                 elif opcAux == "5":
                     print(len(lista))
@@ -111,14 +120,21 @@ def main():
             if (lista!=[]):
                 posRepeat = int(input("Ingrese la posicion donde iniciará el repeat"))
                 distancia = int(input("Ingrese la distancia del repeat"))
-                cantidadRepeat = int(input("Ingrese la cantidad de repeat"))
-                len(lista)
-                result=insertarRepeatError(hileraBase, posRepeat, lista, distancia, cantidadRepeat)
-                print("Resultado: " + result)
+                deseaPalindromo=int(input ("Desea Palindromo [1/0]"))
+                if deseaPalindromo== 1:
+                    palin = palindromo(lista)
+                    result=insertarRepeatError(hileraBase, posRepeat, palin, distancia, len(lista))
+                    print(hileraBase)
+                    print(palin)
+                    print("Resultado: " + result)
+                else:
+                    result = insertarRepeatError(hileraBase, posRepeat, lista, distancia, len(lista))
+                    print(hileraBase)
+                    print("Resultado: " + result)
             else:
                 print("Debe de ingresar al menos una modificacion en el repeat")
 
-        elif opc == "10":
+        elif opc == "11":
             print("Cargue su hilera:")
             hileraBase = cargarHilera()
             cantFragmentos = int(input("Cantidad de fragmentos: "))
