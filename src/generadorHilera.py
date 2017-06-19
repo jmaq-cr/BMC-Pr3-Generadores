@@ -1,4 +1,4 @@
-from random import randrange
+from random import randrange, expovariate
 from numpy.random import choice
 from random import randint
 
@@ -171,8 +171,43 @@ def reverse(list):
     else:
         return list[-1]+reverse(list[:-1])
 
+def palindromo(fragmentos):
+    fragTemp = []
+    for i in range(len(fragmentos)):
+        pos = randint(1, 4)
+        if (pos == 1):
+            fragTemp.append(fragmentos[i]+fragmentos[i][::-1])
+        else:
+            fragTemp.append(fragmentos[i])
+    return fragTemp
 
-
+def mutaciones(fragmentos, opc):
+    distanciaErrores = int(round(expovariate(0.1)))  # genera la distancia entre errores con distribucion exponencia
+    distanciaErrores=5
+    totalLen = sum(len(f) for f in fragmentos)
+    i = 0
+    contError = 0
+    for frag in range(len(fragmentos)):
+        for i in range(len(fragmentos[frag])):
+            if contError == distanciaErrores:
+                if opc == 1:
+                    alf = ["A", "C", "G", "T"]
+                    string = fragmentos[frag][:i] + alf[randint(0, 3)] + fragmentos[frag][i:]
+                    fragmentos.pop(frag)
+                    fragmentos.insert(frag, string)
+                elif opc == 2:
+                    alf = ["A", "C", "G", "T"]
+                    string = fragmentos[frag][:(i - 1)] + alf[randint(0, 3)] + fragmentos[frag][(i + 1):]
+                    fragmentos.pop(frag)
+                    fragmentos.insert(frag, string)
+                else:
+                    string = fragmentos[frag][:(i - 1)] + fragmentos[frag][(i + 1):]
+                    fragmentos.pop(frag)
+                    fragmentos.insert(frag, string)
+                contError = 0
+            else:
+                contError += 1
+    return fragmentos
 
 
 
